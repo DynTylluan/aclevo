@@ -1,0 +1,8 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+.support.discordapp.com	TRUE	/	FALSE	1999999999	__cfduid	de90ca8d6d2dd5d303be0ade1a4e3632b1572989409
+.support.discordapp.com	TRUE	/	FALSE	1999999999	__cfruid	e4f404139508714d7705d508e81e70fe1b85f08a-1572989410
+.medium.com	TRUE	/	FALSE	1999999999	__cfduid	d84c8aa0c2092fb95b3ff1b104d39cc791572989410
+.aclevo.xyz	TRUE	/	FALSE	1999999999	__cfduid	d07fc497b1cc1a5c85d759cc54df8bf611572989414
+aclevo.xyz	TRUE	/	FALSE	1999999999	october_session	eyJpdiI6IjV1Z3B5ZVo1bUViMkFqQVRGNWVidVE9PSIsInZhbHVlIjoiUWxZOXdUcjZ2RVZOam51dGdCNTlZdmdEdjVBRHgxaUZVZWFhejBMQWxkZE9RendLV0Y0UVQ3clFnamZTVzQ1cnJoTlB6bnZLR1BEekJPSkV6aG80a0E9PSIsIm1hYyI6ImE0MjVjZjM5OWJiZTQzYTQyZjY2NDY4OWE0ODY2Y2NjZjg2ZWVkODc3YTM0ZmNkZTIxNmU0NjAwZDlkYjk0NDYifQ%3D%3D
+

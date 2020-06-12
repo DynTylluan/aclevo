@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from aclevo.xyz/blog/post/arch-experiments-removing-pacman by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 05 Nov 2019 21:29:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="../../storage/app/media/Blog/Aclevo2019Logo_o-1.png">
+    <link rel="manifest" href="../../manifest.json">
+    <meta name="theme-color" content="#0068c0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Reasonably Selenium ">
+    <meta name="keywords" content="Aclevo, tech, gaming, content, innovation, collaboration, autism, advocacy, fun, services, projects, series">
+    
+<title>Arch Experiments #1 — Removing Pacman | Aclevo</title>
+<meta name="description" content="&lt;div class=&quot;post--content&quot;&gt;
+
+    &lt;p&gt;&lt;s&gt;In our previous blog post, we pointed out that it is very easy to remove Arch Linux&#039;s package manager.&lt;/s&gt; (UPDATE: The blog post mentioned has been removed.) But what happens if you do, and what are the risks you are taking once you do so? Is there a way to reinstall &lt;strong&gt;pacman&lt;/strong&gt;? Are you able to remove the package manager from other Arch-like distributions that use the same package manager? Are you risking borking your Linux System by uninstalling it?&lt;/p&gt;
+
+    &lt;h2 id=&quot;arch-linux-runs-fine-without-pacman&quot;&gt;Arch Linux runs fine without Pacman&lt;/h2&gt;
+
+    &lt;p&gt;I decided to try uninstalling &lt;strong&gt;pacman &lt;/strong&gt;myself by installing Arch Linux in a virtual machine and removi...&lt;/p&gt;&lt;/div&gt;" />
+<link rel="canonical" href="arch-experiments-removing-pacman.html">
+<meta name="robots" content="index, follow" /> 
+
+
+
+<link rel="shortcut icon" href="../../favicon.html" type="image/x-icon">
+<link rel="icon" type="image/x-icon" href="../../favicon.html" /> 
+
+
+<meta property="og:type" content="blog" /> 
+<meta property="og:title" content="Arch Experiments #1 — Removing Pacman" />
+<meta property="og:description" content="&lt;div class=&quot;post--content&quot;&gt;
+
+    &lt;p&gt;&lt;s&gt;In our previous blog post, we pointed out that it is very easy to remove Arch Linux&#039;s package manager.&lt;/s&gt; (UPDATE: The blog post mentioned has been removed.) But what happens if you do, and what are the risks you are taking once you do so? Is there a way to reinstall &lt;strong&gt;pacman&lt;/strong&gt;? Are you able to remove the package manager from other Arch-like distributions that use the same package manager? Are you risking borking your Linux System by uninstalling it?&lt;/p&gt;
+
+    &lt;h2 id=&quot;arch-linux-runs-fine-without-pacman&quot;&gt;Arch Linux runs fine without Pacman&lt;/h2&gt;
+
+    &lt;p&gt;I decided to try uninstalling &lt;strong&gt;pacman &lt;/strong&gt;myself by installing Arch Linux in a virtual machine and removi...&lt;/p&gt;&lt;/div&gt;" />
+<meta property="og:image" content="../../storage/app/media/Blog/download.html" />
+<meta property="og:url" content="arch-experiments-removing-pacman.html" />
+<meta property="og:locale" content="" />
+<meta property="fb:app_id" content="" />
+<meta name="twitter:title" content="Arch Experiments #1 — Removing Pacman">
+<meta name="twitter:description" content="&lt;div class=&quot;post--content&quot;&gt;
+
+    &lt;p&gt;&lt;s&gt;In our previous blog post, we pointed out that it is very easy to remove Arch Linux&#039;s package manager.&lt;/s&gt; (UPDATE: The blog post mentioned has been removed.) But what happens if you do, and what are the risks you are taking once you do so? Is there a way to reinstall &lt;strong&gt;pacman&lt;/strong&gt;? Are you able to remove the package manager from other Arch-like distributions that use the same package manager? Are you risking borking your Linux System by uninstalling it?&lt;/p&gt;
+
+    &lt;h2 id=&quot;arch-linux-runs-fine-without-pacman&quot;&gt;Arch Linux runs fine without Pacman&lt;/h2&gt;
+
+    &lt;p&gt;I decided to try uninstalling &lt;strong&gt;pacman &lt;/strong&gt;myself by installing Arch Linux in a virtual machine and removi...&lt;/p&gt;&lt;/div&gt;">
+<meta name="twitter:image" content="../../storage/app/media/Blog/download.html" />
+
+        <style>
+    @font-face {
+      font-family: 'Coda';
+      font-display: auto;
+      font-style: normal;
+      font-weight: 400;
+      src: local('Coda Regular'), local('Coda-Regular'), url(https://fonts.gstatic.com/s/coda/v15/SLXHc1jY5nQ8FUUGaw.woff2) format('woff2');
+    }
+    @font-face {
+    	font-family: 'Ostrich Rounded';
+    	font-display: auto;
+    	src: url('../../themes/aclevo-theme/assets/font/ostrich-sans/ostrich-rounded.eot');
+    	src: local('☺'), url('../../themes/aclevo-theme/assets/font/ostrich-sans/ostrich-rounded.woff') format('woff'), url('../../themes/aclevo-theme/assets/font/ostrich-sans/ostrich-rounded.ttf') format('truetype'), url('../../themes/aclevo-theme/assets/font/ostrich-sans/ostrich-rounded.svg') format('svg');
+    	font-weight: 500;
+    	font-style: normal;
+    }
+    @font-face {
+    	font-family: 'Ostrich Black';
+    	font-display: auto;
+    	src: url('../../themes/aclevo-theme/assets/font/ostrich-sans/ostrich-black.eot');
+    	src: local('☺'), url('../../themes/aclevo-theme/assets/font/ostrich-sans/ostrich-black.woff') format('woff'), url('../../themes/aclevo-theme/assets/font/ostrich-sans/ostrich-black.ttf') format('truetype'), url('../../themes/aclevo-theme/assets/font/ostrich-sans/ostrich-black.svg') format('svg');
+    	font-weight: 900;
+    	font-style: normal;
+    }
+    
+    body {
+     font-family: 'Coda', sans-serif !important;   
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+     font-family: "Ostrich Rounded", "Coda", Arial, sans-serif !important;
+     font-weight: 500 !important;
+    }
+    
+    .navbar-brand {
+     font-family: "Ostrich Black", "Coda", Arial, sans-serif;
+     font-weight: 900 !important;
+     font-size: 1.75rem;
+    }
+    
+    nav, footer {
+     background-color: #0069c0;
+    }
+    
+    nav .nav-link:hover, .nav-link.active {
+        color: white !important;
+        font-weight: 600 !important;
+    }
+    </style>
+    <title>Arch Experiments #1 — Removing Pacman - Aclevo Blog</title>
+    <!-- Bootstrap core CSS -->
+    <link async rel="stylesheet" href="../../themes/aclevo-theme/assets/css/bootstrap.min.css" crossorigin="anonymous">
+    <link async defer href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+
+    <body>
+        <div class="sticky-top">
+        <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="position: sticky">
+      <div class="container">
+        <a class="navbar-brand" href="#">Aclevo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav">
+            <li class="nav-item  dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown"  href="#">
+                Projects
+                <span class="caret"></span>            </a>
+
+                            <ul class="dropdown-menu">
+                <a class="dropdown-item"  href="../../projects/nova-x.html">
+                Nova X
+                            </a>
+
+                    </li>
+                <a class="dropdown-item"  href="../../projects/react-os-xp-edition.html">
+                React OS: XP Edition
+                            </a>
+
+                    </li>
+                <a class="dropdown-item"  href="../../projects/supernova-webserver.html">
+                SuperNova Webserver
+                            </a>
+
+                    </li>
+    </ul>                    </li>
+            <li class="nav-item  dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown"  href="#">
+                Series
+                <span class="caret"></span>            </a>
+
+                            <ul class="dropdown-menu">
+                <a class="dropdown-item"  href="../../series/data-on-the-waves.html">
+                Data On The Waves
+                            </a>
+
+                    </li>
+                <a class="dropdown-item"  href="../../series/keep-talking-and-nobody-explodes.html">
+                Keep Talking & Nobody Explodes
+                            </a>
+
+                    </li>
+                <a class="dropdown-item"  href="../../series/minecraft-mining.html">
+                Minecraft Mining
+                            </a>
+
+                    </li>
+                <a class="dropdown-item"  href="../../series/minecraft-railfailing.html">
+                Minecraft Railfailing
+                            </a>
+
+                    </li>
+    </ul>                    </li>
+            <li class="nav-item  dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown"  href="#">
+                Services
+                <span class="caret"></span>            </a>
+
+                            <ul class="dropdown-menu">
+                <a class="dropdown-item"  href="https://forum.aclevo.xyz/">
+                Forum
+                            </a>
+
+                    </li>
+                <a class="dropdown-item"  href="https://mc.aclevo.xyz/">
+                Minecraft
+                            </a>
+
+                    </li>
+                <a class="dropdown-item"  href="https://social.aclevo.xyz/">
+                Social
+                            </a>
+
+                    </li>
+                <a class="dropdown-item"  href="#">
+                Wiki (Coming Soon)
+                            </a>
+
+                    </li>
+    </ul>                    </li>
+    </ul>        <ul class="navbar-nav ml-auto">
+            <li class="nav-item  ">
+            <a class="nav-link "  href="../../index.html">
+                Home
+                            </a>
+
+                    </li>
+            <li class="nav-item  ">
+            <a class="nav-link "  href="../../blog.html">
+                Blog
+                            </a>
+
+                    </li>
+            <li class="nav-item  ">
+            <a class="nav-link "  href="../../about.html">
+                About
+                            </a>
+
+                    </li>
+            <li class="nav-item  ">
+            <a class="nav-link "  href="../../contact.html">
+                Contact
+                            </a>
+
+                    </li>
+            <li class="nav-item  dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown"  href="#">
+                More
+                <span class="caret"></span>            </a>
+
+                            <ul class="dropdown-menu">
+                <a class="dropdown-item"  href="#">
+                Live (coming soon)
+                            </a>
+
+                    </li>
+                <a class="dropdown-item"  href="https://flowinity.com/">
+                Flowinity
+                            </a>
+
+                    </li>
+                <a class="dropdown-item"  href="https://www.minoave.net/">
+                Minoave
+                            </a>
+
+                    </li>
+    </ul>                    </li>
+    </ul>        </div>
+      </div>
+    </nav>        </div>
+        
+        <!-- Post Content Column -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+          <!-- Title -->
+          <h1 class="mt-4">Arch Experiments #1 — Removing Pacman</h1>
+
+          <!-- Author -->
+          <p class="lead">by  Aclevo Staff</p>
+          
+          
+          <hr>
+        
+          <!-- Date/Time -->
+          <p>Posted  in  <a href="../../account.html">Teklik Development</a>  ,          on Jun 17, 2019</p>
+    
+          <hr>
+          <script async src="../../../pagead2.googlesyndication.com/pagead/js/f.txt"></script>
+            <!-- Blog Ads Top -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3294253820838789"
+                 data-ad-slot="7786465841"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <div class="abmessage" style="display:none"></div>
+          <hr>
+
+          <!-- Preview Image -->
+                <img class="img-fluid rounded" data-src="" src="../../storage/app/media/Blog/arch-linux-based-distributions-featured-800x400.png" alt="">
+        
+          
+
+          <!-- Post Content -->
+          <div class="content"><div class="post--content">
+
+    <p><s>In our previous blog post, we pointed out that it is very easy to remove Arch Linux's package manager.</s> (UPDATE: The blog post mentioned has been removed.) But what happens if you do, and what are the risks you are taking once you do so? Is there a way to reinstall <strong>pacman</strong>? Are you able to remove the package manager from other Arch-like distributions that use the same package manager? Are you risking borking your Linux System by uninstalling it?</p>
+
+    <h2 id="arch-linux-runs-fine-without-pacman">Arch Linux runs fine without Pacman</h2>
+
+    <p>I decided to try uninstalling <strong>pacman </strong>myself by installing Arch Linux in a virtual machine and removing it by itself. It is important to only remove that package though by running <code>sudo pacman -Rd --nodeps pacman</code> if you are a normal user, and <code>pacman -Rd --nodeps pacman</code> if you are in a superuser environment, or logged into as root. Running <code>sudo pacman -R pacman</code> will fail because there are dependencies that depend on Pacman. <strong>ATTEMPTING TO REMOVE</strong> <code>sudo pacman -Rs pacman</code>, or <code>sudo pacman -Rsc pacman</code> <strong>WILL REMOVE ALL PACKAGES THROUGH DEPENDENCIES, AND YOU WILL BE LEFT WITH A BROKEN SYSTEM!</strong> The system will warn you that <strong>pacman</strong> is designated at a HoldPkg, where such packages require confirmation before removal. Once I made sure that the package manager was the only package I was removing, I consented to the removal, and it actually worked. Some breakage did occur in some areas, such as attempting to use an AUR helper to install packages, and some libraries will show up as missing because they were deleted, but you are pretty much left with a Arch System without a package manager.</p>
+
+    <p>I would, however, highly recommend against uninstalling Arch's Package Manager. Especially because Arch Linux is a rolling-release Linux Distribution, you are at risk of falling behind on updates unless you decide to update every package yourself, which can take an enormous amount of time and skill. You may also break your Linux system while trying to update every package yourself, as differentiating versions of system packages can prevent you from using the appropriate utilities to make the packages, or it might cause certain system programs to stop running correctly, resulting in a broken system. For these reasons, you may want to consider reinstalling <strong>pacman.</strong></p>
+
+    <h2 id="reinstalling-pacman-do-it-right-">Reinstalling Pacman: Do It Right...</h2>
+
+    <p>One thing I learned from trying to reinstall Arch's package manager is to make sure you absolutely know what you are doing, and how to do it. By not knowing enough about Linux's utilities, I was able to corrupt my system by attempting to move <strong>pacman</strong> back to the correct directories but accidentally "backing up" all of the other system files into other folders. Since I had no GUI installed, I was able to type the wrong commands into the terminal to cause these problems. It was pretty easy to download <strong>pacman</strong> from the Arch Package's Website and extract it to an appropriate folder, though.</p>
+
+    <p>This is not how I would recommend reinstalling <strong>pacman</strong> though, because you have the chance of breaking your system trying to do it this way. Even if you have the expertise to do so, you should still proceed with caution seeing as you could easily destroy your system, requiring a reinstall of the system using a Live CD. We recommend reading the following forum posts on the Arch Linux Forums to see what other people have done in order to repair their system. The Arch Linux Wiki also provides two specific methods to reinstalling <strong>pacman. </strong>Please be sure to read all of the instructions carefully before attempting to restore the package manager.<strong> </strong>The links are available below:</p>
+
+    <ul><li><strong><a href="https://bbs.archlinux.org/viewtopic.php?id=241213">Pacman Command Not Found</a> - Arch Linux Forum</strong></li>
+        <li><strong><a href="https://bbs.archlinux.org/viewtopic.php?id=62968">Pacman Commands Not Working From Command Line</a> - Arch Linux Forum</strong></li>
+        <li><strong><a href="https://wiki.archlinux.org/index.php/Pacman#Pacman_crashes_during_an_upgrade">Pacman Crashes During An Update</a> - Arch Linux Wiki</strong></li>
+        <li><strong><a href="https://wiki.archlinux.org/index.php/Pacman#Manually_reinstalling_pacman">Manually Reinstalling Pacman</a> - Arch Linux Wiki</strong></li>
+    </ul><h2 id="do-not-attempt-this-on-manjaro">Do Not Attempt This On Manjaro</h2>
+
+    <p>Like Arch Linux, Manjaro will simply not allow you to simply uninstall <strong>pacman</strong> as you would think. Attempting to run <code>sudo pacman -R pacman</code> will fail with <code>error: failed to prepare transaction (could not satisfy dependencies)</code>, listing a few important packages that <strong>YOU SHOULD NOT REMOVE</strong>, such as manjaro-system, mhwd, and even yay if you use AUR packages. Attempting to run <code>sudo pacman -Rs pacman</code> will yield the same result, requiring the use of <code>sudo pacman -Rd --nodeps pacman</code> to continue uninstalling this package without affecting the other ones. Once again, Manjaro will specify that this package is being held, requiring confirmation to remove it. When do you remove it, it will probably behave the same way Arch Linux behaved with no package manager and missing libraries. You will also have problems with <strong>Octopi</strong> and <strong>Pamac</strong>, seeing as they no longer have a backend to work with.</p>
+
+    <p>To reinstall Manjaro's Package Manager without a Live CD, you must download it from one of the Manjaro Repos, as downloading the one Arch uses could cause issues with other packages, being released on an entirely different release schedule, causing version dependency issues. To get a list of repos to download the correct file from, <a href="https://repo.manjaro.org/">go to the Manjaro Repo List Website</a>. Select the mirror closest to you, then click the branch that you are using (Usually Stable or x32-stable if you are using a 32-bit Operating System), core, amd64 (Normal) or i386 (x32), then scroll down to find the appropriate <strong>pacman</strong> package you need. You may also find it easily with your web browsers Find Tool, usually enabled by pressing CTRL+F or CMD+F. Once you download this package, installation is similar to how you would do it on Arch Linux, following the steps mentioned above.</p>
+
+    <h2 id="conclusion-should-you-remove-pacman">Conclusion – Should You Remove Pacman?</h2>
+
+    <p>If you know your way around Linux, and you have a machine you wouldn't mind breaking, then you are free to do as you please. However, I would highly recommend doing this in a Virtual Machine instead so that you can easily erase the experiment once you are done, allowing you to use your system as if nothing had happened. Learning to reinstall Pacman by yourself makes a great opportunity to learn more about what Arch Linux is and how it works. You could also learn how to get around Linux without a package manager, which can be quite difficult but would also teach you a lot of information about the system.</p>
+
+    <p>I would NOT recommend this experiment to people who are new to using Linux. Seeing as mistyping one command can destroy your entire system, it is a good idea to learn more about how Linux works before even trying this. This experiment is for people who are advanced users. Other package managers, such as the Advanced Packaging Tool, put in heavier safeguards for removing themselves for good reasons. Feel free to come back once you know more about the inner workings.</p>
+
+    <p>Please let us know in the comments whether you want to see what happens when you try this on other distributions such as Debian and Ubuntu, and feel free to request your own experiment down there as well. If you liked the post, please give us a favorite, and stay tuned for more Linux experiments in the future. Also feel free to take a look at some of the other content we produce, such as the <a href="../../arch-gentoo-and-linux-from-scratch-an-experience-with-the-three-most-challenging-nix-oses/index.html">three hardest distributions</a>. Thanks for reading this blog post, and have a splendid day!</p>
+</div></div>
+          
+          <hr>
+                      <div id="disqus_thread"></div>
+        <script>
+            var disqus_config = function () {
+                this.page.url = '' || window.location.href;
+                this.page.identifier = "" || window.location.href;
+            };
+
+            (function () {
+                var d = document, s = d.createElement('script');
+                s.src = '../../../aclevo-new.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript><div class="alert alert-warning" role="alert"><strong>Disqus:</strong> Your browser does not support JavaScript!</div></noscript>
+    
+          </div>
+          
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+          <!-- Search Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button">Go!</button>
+                </span>
+              </div>
+            </div>
+          </div>
+
+                    <!-- Categories Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">Categories</h5>
+                  <div class="list-group list-group-flush">
+                                        <a href="../uncategorized.html" class="list-group-item " style="display: flex; justify-content: space-between;">
+                      
+                      Uncategorized
+                      
+                      
+                      <span class="badge badge-primary badge-pill pull-right">0</span>
+                      </a>
+                                            <a href="../announcements.html" class="list-group-item " style="display: flex; justify-content: space-between;">
+                      
+                      Announcements
+                      
+                      
+                      <span class="badge badge-primary badge-pill pull-right">4</span>
+                      </a>
+                                            <a href="../scerci-media.html" class="list-group-item " style="display: flex; justify-content: space-between;">
+                      
+                      Scerci Media
+                      
+                      
+                      <span class="badge badge-primary badge-pill pull-right">4</span>
+                      </a>
+                                            <a href="../espera-studios.html" class="list-group-item " style="display: flex; justify-content: space-between;">
+                      
+                      Espera Studios
+                      
+                      
+                      <span class="badge badge-primary badge-pill pull-right">9</span>
+                      </a>
+                                            <a href="../teklik-development.html" class="list-group-item " style="display: flex; justify-content: space-between;">
+                      
+                      Teklik Development
+                      
+                      
+                      <span class="badge badge-primary badge-pill pull-right">11</span>
+                      </a>
+                                    </div>
+          </div>
+                    
+          <div class="card my-4">
+            <h5 class="card-header">Advertisement</h5>
+            <div class="card-body">
+              <center>
+              <script async src="../../../pagead2.googlesyndication.com/pagead/js/f.txt"></script>
+                <!-- Blog Ads Right -->
+                <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-client="ca-pub-3294253820838789"
+                   data-ad-slot="7871948523"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+                <script>
+                  (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <div class="abmessage" style="display:none"></div>
+              </center>
+            </div>
+          </div>
+          
+          <!-- Side Widget -->
+          <div class="card my-4">
+            <h5 class="card-header">How's The New Site?</h5>
+            <div class="card-body">
+
+              Let us know about how we're doing, and what we should do to improve it.
+            </div>
+          </div>
+        
+        <script>
+      window.onload = function() {
+        setTimeout(function() {
+          var ads = document.querySelectorAll("ins.adsbygoogle");
+          ads.forEach(function(ad) {
+              var abms = document.querySelectorAll(".abmessage");
+              if (ad && ad.innerHTML.replace(/\s/g, "").length == 0) {
+                  console.log("An ad didn't load!");
+                  abms.forEach(function(abm) {
+                      abm.style.cssText = 'display:block;text-align:center';
+                      abm.innerHTML = "Seems like you're blocking our ads! Please support us by doing one of the following:<br><a href=\"/adblock-whitelist-tutorial\" class=\"btn btn-primary\">Whitelist us</a> <a href=\"javascript:void;\" class=\"btn btn-primary\">Donate (Coming Soon)</a>";
+                  });
+              }else{
+                  abms.forEach(function(abm) {
+                      abm.style.cssText = 'display:none'; //hide the adblock messages
+                  });
+              }
+          });
+        }, 1500); 
+      };
+    </script>
+        </div>
+          
+    </div>
+</div>    </body>
+
+    <!-- Footer -->
+    <footer class="py-5">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright <i class="far fa-copyright"></i> Aclevo 2015-2019 All Rights Reserved unless noted.</p>
+      </div>
+          <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async defer src="https://www.googletagmanager.com/gtag/js?id=UA-63265906-2"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        gtag('config', 'UA-63265906-2');
+        </script>
+        <script async defer src="../../../pagead2.googlesyndication.com/pagead/js/f.txt"></script>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3294253820838789",
+            enable_page_level_ads: true
+          });
+        </script>
+        <script src="../../themes/aclevo-theme/assets/js/jquery-3.4.1.slim.min.js"></script>
+        <script async defer src="../../themes/aclevo-theme/assets/js/popper.min.js"></script>
+        <script async defer src="../../themes/aclevo-theme/assets/js/bootstrap.min.js"></script>
+        <script src="../../modules/system/assets/js/framework.combined-min.js"></script>
+<link rel="stylesheet" property="stylesheet" href="../../modules/system/assets/css/framework.extras-min.css">
+      <!-- /.container -->
+    </footer>

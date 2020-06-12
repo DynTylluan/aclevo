@@ -1,0 +1,25 @@
+{  
+ 
+"name": "Aclevo Website",   
+   
+"short_name": "Aclevo",
+
+"icons": [
+{
+ "src": "https://aclevo.xyz/storage/app/media/Blog/Aclevo2019Logo-1.png",
+ "type": "image/png",
+ "sizes": "512x512"
+}
+],
+     
+"lang": "en-US",     
+ 
+"start_url": "/", 
+     
+"display": "standalone",  
+    
+"background_color": "white",   
+   
+"theme_color": "#0068c0" 
+ 
+}
